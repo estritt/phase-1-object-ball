@@ -121,13 +121,12 @@ function gameObject() {
 }
 
 function numPointsScored(player) {
-    let pointsToReturn
     const game = gameObject();
     for (team in game) {
-        for (person in team.players) {
+        for (person in game[team]['players']) {
             if (person === player) {
-                return game.team.person.points;
+                return game[team]['players'][person].points;
             }
         }
     }
-    }
+}
