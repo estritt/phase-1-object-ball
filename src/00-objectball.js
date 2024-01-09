@@ -130,3 +130,26 @@ function numPointsScored(player) {
         }
     }
 }
+
+function shoeSize(player) {
+    const game = gameObject();
+    for (team in game) {
+        for (person in game[team]['players']) {
+            if (person === player) {
+                return game[team]['players'][person].shoe;
+            }
+        }
+    }
+}
+
+function teamColors(teamInput) {
+    const game = gameObject();
+    for (team in game) {
+        debugger
+        if (game[team].teamName === teamInput) {
+            debugger
+            return game[team]['colors'];
+        }
+    }
+}
+
