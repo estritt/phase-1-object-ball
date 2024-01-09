@@ -145,11 +145,34 @@ function shoeSize(player) {
 function teamColors(teamInput) {
     const game = gameObject();
     for (team in game) {
-        debugger
         if (game[team].teamName === teamInput) {
-            debugger
             return game[team]['colors'];
         }
     }
 }
 
+function teamNames() {
+    const game = gameObject();
+    const names = [];
+    for (team in game) {
+        names.push(game[team].teamName);
+    }
+    return names;
+}
+
+function playerNumbers(teamInput) {
+    const game = gameObject();
+    for (team in game) {
+        if (game[team].teamName === teamInput) {
+            const jerseyNumbers = [];
+            for (player in game[team].players) {
+                jerseyNumbers.push(game[team].players.number);
+            }
+            return jerseyNumbers;
+        }
+    }
+}
+
+function playerStats(playerInput) {
+
+}
