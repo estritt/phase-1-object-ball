@@ -114,8 +114,20 @@ function gameObject() {
                     "blocks": 5,
                     "slamDunks": 12,
                 },
-
+            }
         },
     }
     return game;
 }
+
+function numPointsScored(player) {
+    let pointsToReturn
+    const game = gameObject();
+    for (team in game) {
+        for (person in team.players) {
+            if (person === player) {
+                return game.team.person.points;
+            }
+        }
+    }
+    }
