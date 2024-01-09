@@ -121,7 +121,6 @@ function gameObject() {
 }
 
 function numPointsScored(player) {
-    let pointsToReturn
     const game = gameObject();
     for (team in game) {
         for (person in team.players) {
@@ -130,4 +129,13 @@ function numPointsScored(player) {
             }
         }
     }
+}
+
+function teamNames() {
+    const game = gameObject();
+    const names = []
+    for (team in game) {
+        names.push(game[team].teamName);
     }
+    return names;
+}
