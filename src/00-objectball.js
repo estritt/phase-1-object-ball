@@ -123,19 +123,139 @@ function gameObject() {
 function numPointsScored(player) {
     const game = gameObject();
     for (team in game) {
-        for (person in team.players) {
+        for (person in game[team]['players']) {
             if (person === player) {
-                return game.team.person.points;
+                return game[team]['players'][person].points;
             }
+        }
+    }
+}
+
+function shoeSize(player) {
+    const game = gameObject();
+    for (team in game) {
+        for (person in game[team]['players']) {
+            if (person === player) {
+                return game[team]['players'][person].shoe;
+            }
+        }
+    }
+}
+
+function teamColors(teamInput) {
+    const game = gameObject();
+    for (team in game) {
+        if (game[team].teamName === teamInput) {
+            return game[team]['colors'];
         }
     }
 }
 
 function teamNames() {
     const game = gameObject();
-    const names = []
+    const names = [];
     for (team in game) {
         names.push(game[team].teamName);
     }
     return names;
+}
+
+function playerNumbers(teamInput) {
+    const game = gameObject();
+    for (team in game) {
+        if (game[team].teamName === teamInput) {
+            const jerseyNumbers = [];
+            for (player in game[team].players) {
+                jerseyNumbers.push(game[team].players.number);
+            }
+            return jerseyNumbers;
+        }
+    }
+}
+
+function playerStats(playerInput) {
+    const game = gameObject();
+    for (team in game) {
+        for (person in game[team]['players']) {
+            if (person === player) {
+                return game[team]['players'][person];
+            }
+        }
+    }
+}
+
+function bigShoeRebounds() {
+    const game = gameObject();
+    const shoeList = [];
+    const reboundList = [];
+    for (team in game) {
+        for (person in game[team]['players']) {
+            shoeList.push(game[team]['players'][person]['shoe']);
+            reboundList.push(game[team]['players'][person]['rebounds']);
+        }
+    }
+    // today i learned Math.max() needs actual numbers, not an array. spreading the array fixes this
+    return(reboundList[shoeList.indexOf(Math.max(...shoeList))]);
+}
+
+function mostPointsScored() {
+    const game = gameObject();
+    const pointsList = [];
+    const allNames = [];
+    for (team in game) {
+        const playersWithStats = game[team]['players'];
+        const namesAsKeys = Object.keys(playersWithStats);
+        allNames.push(...namesAsKeys);
+        for (var i = 0; i < namesAsKeys.length; i++) {
+            pointsList.push(playersWithStats[namesAsKeys[i]]['points']);
+        }
+    }
+    return allNames[pointsList.indexOf(Math.max(...pointsList))];
+}
+
+function winningTeam() {
+    const game = gameObject();
+    const pointsPerTeam = [];
+    const teams = [];
+    var i = 0;
+    for (team in game) { //maybe should have used a regular for loop since im indexing anyways
+        pointsPerTeam.push(0);
+        teams.push(game[team]['teamName']);
+        for (person in game[team]['players']) {
+            pointsPerTeam[i] += game[team]['players'][person]['points'];
+        }
+        i++;
+    }
+    return teams[pointsPerTeam.indexOf(Math.max(...pointsPerTeam))];
+}
+
+function playerWithLongestName() {
+    const game = gameObject();
+    let longestName = '';
+    for (team in game) {
+        const teamPlayers = Object.keys(game[team]['players']);
+        for (playerName of teamPlayers) {
+            if (playerName.length > longestName.length) {
+                longestName = playerName;
+            }
+        }
+    }
+    return longestName;
+}
+
+function doesLongNameStealATon() {
+    const game = gameObject();
+    const stealsList = [];
+    const allNames = [];
+    for (team in game) {
+        const playersWithStats = game[team]['players'];
+        const namesAsKeys = Object.keys(playersWithStats);
+        allNames.push(...namesAsKeys);
+        for (var i = 0; i < namesAsKeys.length; i++) {
+            stealsList.push(playersWithStats[namesAsKeys[i]]['steals']);
+        }
+    }
+    const longestName = playerWithLongestName();
+    const hasMostSteals = allNames[stealsList.indexOf(Math.max(...stealsList))];
+    return (longestName === hasMostSteals);
 }
